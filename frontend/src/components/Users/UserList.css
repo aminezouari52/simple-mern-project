@@ -1,14 +1,14 @@
-#products {
+#users {
   width: 90%;
   max-width: 40rem;
   margin: 2rem auto;
 }
 
-#products > p {
+#users > p {
   text-align: center;
 }
 
-.product-list {
+.user-list {
   list-style: none;
   margin: 0;
   padding: 0;

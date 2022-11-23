@@ -1,74 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 
-import Header from './components/Header/Header';
-import NewProduct from './components/Products/NewProduct';
-import ProductList from './components/Products/ProductList';
-import './App.css';
+import Header from './components/Header/Header'
+import NewUser from './components/Users/NewUser'
+import UserList from './components/Users/UserList'
+import './App.css'
+
+let users = [
+  {
+    id: 0,
+    name: 'amine',
+    age: 20,
+  },
+  {
+    id: 1,
+    name: 'ahmed',
+    age: 25,
+  },
+  {
+    id: 2,
+    name: 'yesin',
+    age: 19,
+  },
+]
 
 function App() {
-  const [loadedProducts, setLoadedProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadedUsers, setLoadedUsers] = useState(users)
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:5000/products');
-
-      const responseData = await response.json();
-
-      setLoadedProducts(responseData.products);
-      setIsLoading(false);
-    };
-
-    fetchProducts();
-  }, []);
-
-  const addProductHandler = async (productName, productPrice) => {
-    try {
-      const newProduct = {
-        title: productName,
-        price: +productPrice // "+" to convert string to number
-      };
-      let hasError = false;
-      const response = await fetch('http://localhost:5000/product', {
-        method: 'POST',
-        body: JSON.stringify(newProduct),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        hasError = true;
-      }
-
-      const responseData = await response.json();
-
-      if (hasError) {
-        throw new Error(responseData.message);
-      }
-
-      setLoadedProducts(prevProducts => {
-        return prevProducts.concat({
-          ...newProduct,
-          id: responseData.product.id
-        });
-      });
-    } catch (error) {
-      alert(error.message || 'Something went wrong!');
+  const addUserHandler = (userId, userName, userAge) => {
+    const newUser = {
+      id: +userId,
+      name: userName,
+      age: +userAge,
     }
-  };
+
+    setLoadedUsers((prevUsers) => {
+      return prevUsers.concat(newUser)
+    })
+  }
 
   return (
-    <React.Fragment>
+    <>
       <Header />
       <main>
-        <NewProduct onAddProduct={addProductHandler} />
-        {isLoading && <p className="loader">Loading...</p>}
-        {!isLoading && <ProductList items={loadedProducts} />}
+        <NewUser onAddUser={addUserHandler} />
+        <UserList items={loadedUsers} />
       </main>
-    </React.Fragment>
-  );
+    </>
+  )
 }
 
-export default App;
+export default App
