@@ -8,6 +8,7 @@ const UserItem = (props) => {
       <h5>id: {props.id}</h5>
       <h2>{props.name}</h2>
       <p>Age: {props.age}</p>
+      <h6>Place: {props.place}</h6>
     </li>
   )
 }

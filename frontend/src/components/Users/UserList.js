@@ -16,6 +16,7 @@ const UserList = (props) => {
             id={user.id}
             name={user.name}
             age={user.age}
+            place={user.place}
           />
         ))}
       </ul>

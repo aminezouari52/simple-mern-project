@@ -1,13 +1,24 @@
-import React from 'react';
+import React from 'react'
 
-import './Header.css';
+import { NavLink } from 'react-router-dom'
 
-const Header = props => {
+import './Header.css'
+
+const Header = (props) => {
   return (
     <header className="header">
-      <h1>MERN Shop</h1>
+      <NavLink to="/" className="title">
+        My Place!
+      </NavLink>
+      <div className="nav">
+        <NavLink to="/">Users</NavLink>
+        <NavLink to="authenticate" style={{ borderColor: 'lightgreen' }}>
+          Authenticate
+        </NavLink>
+        <div style={{ borderColor: 'red' }}>New</div>
+      </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

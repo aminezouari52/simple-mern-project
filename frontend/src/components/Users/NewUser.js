@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-import Input from '../Input/Input'
-import Button from '../Button/Button'
+import Input from '../UI/Input/Input'
+import Button from '../UI/Button/Button'
 import './NewUser.css'
 
 const NewUser = (props) => {

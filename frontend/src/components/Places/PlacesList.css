@@ -1,0 +1,16 @@
+#places {
+    width: 90%;
+    max-width: 40rem;
+    margin: 2rem auto;
+  }
+  s
+  #places > p {
+    text-align: center;
+  }
+  
+  .place-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  

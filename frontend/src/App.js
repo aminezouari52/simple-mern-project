@@ -4,25 +4,11 @@ import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header/Header'
 import NewUser from './components/Users/NewUser'
 import UserList from './components/Users/UserList'
-import './App.css'
+import PlacesList from './components/Places/PlacesList'
+import UserPlaces from './components/Places/UserPlaces'
 
-let users = [
-  {
-    id: 0,
-    name: 'amine',
-    age: 20,
-  },
-  {
-    id: 1,
-    name: 'ahmed',
-    age: 25,
-  },
-  {
-    id: 2,
-    name: 'yesin',
-    age: 19,
-  },
-]
+import { users, places } from './utils/database'
+import './App.css'
 
 function App() {
   const [loadedUsers, setLoadedUsers] = useState(users)
@@ -43,8 +29,13 @@ function App() {
     <>
       <Header />
       <main>
-        <NewUser onAddUser={addUserHandler} />
-        <UserList items={loadedUsers} />
+        <Routes>
+          <Route path="/" element={<UserList items={loadedUsers} />} />
+          <Route path="/:userId/places" element={<UserPlaces />} />
+          <Route path="places/" element={<PlacesList items={places} />} />
+        </Routes>
+
+        {/* <NewUser onAddUser={addUserHandler} /> */}
       </main>
     </>
   )
