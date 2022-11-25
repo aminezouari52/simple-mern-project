@@ -6,6 +6,8 @@ import NewUser from './components/Users/NewUser'
 import UserList from './components/Users/UserList'
 import PlacesList from './components/Places/PlacesList'
 import UserPlaces from './components/Places/UserPlaces'
+import NewPlace from './components/Places/NewPlace'
+import Auth from './components/Auth/Auth'
 
 import { users, places } from './utils/database'
 import './App.css'
@@ -31,11 +33,15 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<UserList items={loadedUsers} />} />
-          <Route path="/:userId/places" element={<UserPlaces />} />
-          <Route path="places/" element={<PlacesList items={places} />} />
-        </Routes>
 
-        {/* <NewUser onAddUser={addUserHandler} /> */}
+          <Route path="/:userId/places" element={<UserPlaces />} />
+
+          <Route path="/places" element={<PlacesList items={places} />} />
+
+          <Route path="/places/new" element={<NewPlace />} />
+
+          <Route path="auth" element={<Auth />} />
+        </Routes>
       </main>
     </>
   )
