@@ -21,7 +21,7 @@ const UserPlaces = (props) => {
   return (
     <>
       {placesObjs.map((place) => (
-        <UserPlaceItem keyProp={place.id} title={place.title} />
+        <UserPlaceItem keyProp={place.id} title={place.title} id={place.id} />
       ))}
     </>
   )

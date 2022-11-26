@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { logActions } from '../../store/store'
 import Input from '../UI/Input/Input'
 import Button from '../UI/Button/Button'
 import { places, users } from '../../utils/database'
 import './Auth.css'
+import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
   const [haveAccount, setHaveAccount] = useState(true)
@@ -14,16 +15,16 @@ const Auth = () => {
   const ageRef = useRef(0)
 
   const dispatch = useDispatch()
-  const selector = useSelector((state) => state.value)
-  console.log(selector)
+
+  const navigate = useNavigate()
 
   const accountHandler = () => {
     setHaveAccount((prevState) => !prevState)
   }
 
   const loginHandler = () => {
-    dispatch(logActions.logIn)
-    console.log(selector)
+    dispatch(logActions.logIn())
+    navigate('/')
   }
 
   const addUserHandler = () => {
@@ -37,10 +38,8 @@ const Auth = () => {
       age,
       place: [2],
     })
-
-    nameRef.current.value = ''
-    passRef.current.value = ''
-    ageRef.current.value = ''
+    dispatch(logActions.logIn())
+    navigate('/')
   }
 
   let form

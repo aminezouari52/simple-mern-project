@@ -3,15 +3,16 @@ import { createSlice, configureStore } from '@reduxjs/toolkit'
 const logSlice = createSlice({
   name: 'log',
   initialState: {
-    value: false,
+    value: localStorage.getItem('loggedIn') || false,
   },
   reducers: {
-    logIn: (state) => {
+    logIn(state) {
       state.value = true
-      console.log('hello from login slice')
+      localStorage.setItem('loggedIn', true)
     },
-    logOut: (state) => {
+    logOut(state) {
       state.value = false
+      localStorage.setItem('loggedIn', false)
     },
   },
 })

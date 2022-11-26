@@ -1,13 +1,21 @@
 import React from 'react'
 
-import { NavLink } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logActions } from '../../store/store'
+
+import { NavLink, useNavigate } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 
 import './Header.css'
 
 const Header = (props) => {
+  const dispatch = useDispatch()
+  const loggedIn = useSelector((state) => state.value)
+  const navigate = useNavigate()
+
   const logoutHandler = () => {
-    console.log('logout')
+    dispatch(logActions.logOut())
+    navigate('/')
   }
 
   return (
@@ -17,12 +25,15 @@ const Header = (props) => {
       </NavLink>
       <div className="nav">
         <NavLink to="/">Users</NavLink>
-        <NavLink to="auth">Authenticate</NavLink>
-
-        <NavLink to="places/new">New</NavLink>
-        <Button type="button" onClick={logoutHandler}>
-          Log Out
-        </Button>
+        {loggedIn && (
+          <>
+            <NavLink to="places/new">New</NavLink>
+            <Button type="button" onClick={logoutHandler}>
+              Log Out
+            </Button>
+          </>
+        )}
+        {!loggedIn && <NavLink to="auth">Authenticate</NavLink>}
       </div>
     </header>
   )
