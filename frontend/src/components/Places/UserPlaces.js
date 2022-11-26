@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useParams } from 'react-router-dom'
 import { users, places } from '../../utils/database'
-import PlaceItem from './PlaceItem'
+import UserPlaceItem from './UserPlaceItem'
 
 import './UserPlaces.css'
 
@@ -21,10 +21,7 @@ const UserPlaces = (props) => {
   return (
     <>
       {placesObjs.map((place) => (
-        <p key={place.id}>
-          This user visited: <b>{place.title}</b>! wich is a{' '}
-          <b>{place.description}</b>!
-        </p>
+        <UserPlaceItem keyProp={place.id} title={place.title} />
       ))}
     </>
   )

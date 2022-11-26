@@ -7,6 +7,7 @@ import UserList from './components/Users/UserList'
 import PlacesList from './components/Places/PlacesList'
 import UserPlaces from './components/Places/UserPlaces'
 import NewPlace from './components/Places/NewPlace'
+import UpdatePlace from './components/Places/UpdatePlace'
 import Auth from './components/Auth/Auth'
 
 import { users, places } from './utils/database'
@@ -36,11 +37,13 @@ function App() {
 
           <Route path="/:userId/places" element={<UserPlaces />} />
 
-          <Route path="/places" element={<PlacesList items={places} />} />
+          {/* <Route path="/places" element={<PlacesList items={places} />} /> */}
+
+          <Route path="auth" element={<Auth />} />
 
           <Route path="/places/new" element={<NewPlace />} />
 
-          <Route path="auth" element={<Auth />} />
+          <Route path="/places/:pid" element={<UpdatePlace />} />
         </Routes>
       </main>
     </>

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import './Input.css';
+import './Input.css'
 
-const Input = props => {
+const Input = (props) => {
   return (
     <div className="input">
       <label htmlFor={props.id}>{props.label}</label>
@@ -12,9 +12,10 @@ const Input = props => {
         id={props.id}
         value={props.value}
         onChange={props.onChange}
+        ref={props.inputRef}
       />
     </div>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

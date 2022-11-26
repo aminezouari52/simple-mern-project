@@ -1,10 +1,15 @@
 import React from 'react'
 
 import { NavLink } from 'react-router-dom'
+import Button from '../UI/Button/Button'
 
 import './Header.css'
 
 const Header = (props) => {
+  const logoutHandler = () => {
+    console.log('logout')
+  }
+
   return (
     <header className="header">
       <NavLink to="/" className="title">
@@ -12,12 +17,12 @@ const Header = (props) => {
       </NavLink>
       <div className="nav">
         <NavLink to="/">Users</NavLink>
-        <NavLink to="auth" style={{ borderColor: 'lightgreen' }}>
-          Authenticate
-        </NavLink>
-        <NavLink to="places/new" style={{ borderColor: 'red' }}>
-          New
-        </NavLink>
+        <NavLink to="auth">Authenticate</NavLink>
+
+        <NavLink to="places/new">New</NavLink>
+        <Button type="button" onClick={logoutHandler}>
+          Log Out
+        </Button>
       </div>
     </header>
   )
