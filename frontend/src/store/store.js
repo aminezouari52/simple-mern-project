@@ -6,13 +6,15 @@ const logSlice = createSlice({
     value: localStorage.getItem('loggedIn') || false,
   },
   reducers: {
-    logIn(state) {
+    logIn(state, action) {
       state.value = true
       localStorage.setItem('loggedIn', true)
+      localStorage.setItem('id', action.payload)
     },
     logOut(state) {
       state.value = false
-      localStorage.setItem('loggedIn', false)
+      localStorage.removeItem('loggedIn')
+      localStorage.removeItem('id')
     },
   },
 })

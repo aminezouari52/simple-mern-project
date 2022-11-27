@@ -1,27 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
-import { users, places } from '../../utils/database'
+import { users } from '../../utils/database'
 import UserPlaceItem from './UserPlaceItem'
 
 import './UserPlaces.css'
 
 const UserPlaces = (props) => {
+  const [placesObjs, setPlacesObj] = useState([])
+
   const params = useParams()
 
-  let placeArr
-  users.forEach((u) => {
-    if (u.id === +params.userId) placeArr = u.place
-  })
-  let placesObjs = []
-  places.forEach((place) => {
-    if (placeArr.includes(place.id)) placesObjs.push(place)
-  })
+  useEffect(() => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].id === +params.userId) {
+        setPlacesObj(users[i].place)
+        break
+      }
+    }
+  }, [placesObjs, params.userId])
 
   return (
     <>
       {placesObjs.map((place) => (
-        <UserPlaceItem keyProp={place.id} title={place.title} id={place.id} />
+        <UserPlaceItem
+          key={place.id}
+          id={place.id}
+          title={place.title}
+          description={place.description}
+        />
       ))}
     </>
   )

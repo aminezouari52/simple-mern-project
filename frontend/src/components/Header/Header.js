@@ -8,7 +8,7 @@ import Button from '../UI/Button/Button'
 
 import './Header.css'
 
-const Header = (props) => {
+const Header = () => {
   const dispatch = useDispatch()
   const loggedIn = useSelector((state) => state.value)
   const navigate = useNavigate()

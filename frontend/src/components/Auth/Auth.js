@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { logActions } from '../../store/store'
 import Input from '../UI/Input/Input'
 import Button from '../UI/Button/Button'
-import { places, users } from '../../utils/database'
+import { users } from '../../utils/database'
 import './Auth.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -23,13 +23,22 @@ const Auth = () => {
   }
 
   const loginHandler = () => {
-    dispatch(logActions.logIn())
-    navigate('/')
+    let name = nameRef.current.value
+
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].name === name) {
+        dispatch(logActions.logIn(users[i].id))
+        navigate('/')
+        return
+      }
+    }
+
+    console.log('user not found')
   }
 
   const addUserHandler = () => {
     let name = nameRef.current.value
-    let pass = passRef.current.value
+    // let pass = passRef.current.value
     let age = ageRef.current.value
 
     users.push({
@@ -46,15 +55,13 @@ const Auth = () => {
   if (haveAccount)
     form = (
       <div>
-        {' '}
-        <Input id="email" label="Email" type="email" />
+        <Input id="name" label="Name" type="text" inputRef={nameRef} />
         <Input id="password" label="Password" type="password" />
       </div>
     )
   else
     form = (
       <div>
-        {' '}
         <Input id="name" label="Name" type="name" inputRef={nameRef} />
         <Input
           id="password"
