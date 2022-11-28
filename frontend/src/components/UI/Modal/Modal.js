@@ -4,14 +4,13 @@ import Button from '../Button/Button'
 import './Modal.css'
 
 const Modal = (props) => {
-  const confirmHandler = () => {
+  const confirmDeleteHandler = () => {
     props.confirmDelete()
-    console.log('confirmed!')
     console.log('place deleted successfully!')
     props.removeModal()
   }
 
-  const denyHandler = () => {
+  const removeModalHandler = () => {
     props.removeModal()
   }
 
@@ -20,10 +19,10 @@ const Modal = (props) => {
       <div className="overlay">im overlay</div>
       <div className="confirm">
         <p>Are you sure you want to delete this place?</p>
-        <Button type="button" onClick={confirmHandler}>
+        <Button type="button" onClick={confirmDeleteHandler}>
           Confirm
         </Button>
-        <Button type="button" onClick={denyHandler}>
+        <Button type="button" onClick={removeModalHandler}>
           NO
         </Button>
       </div>

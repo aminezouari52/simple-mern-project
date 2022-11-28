@@ -9,11 +9,12 @@ import Modal from '../UI/Modal/Modal'
 import { users } from '../../utils/database'
 
 const UserPlaceItem = (props) => {
-  const [confirmDelete, setConfimDelete] = useState(false)
+  const [showModal, setShowModal] = useState(false)
 
   const loggedIn = useSelector((state) => state.value)
-  const navigate = useNavigate()
 
+  // edit page
+  const navigate = useNavigate()
   const editHandler = () => {
     navigate(`/places/${props.id}`)
   }
@@ -21,28 +22,25 @@ const UserPlaceItem = (props) => {
   const params = useParams()
   const userId = +params.userId
 
-  const deletePlaceHandler = () => {
-    setConfimDelete((prevState) => !prevState)
+  // modal state
+  const showModalHandler = () => {
+    setShowModal((prevState) => !prevState)
   }
-
   const removeModalHandler = () => {
-    setConfimDelete(false)
+    setShowModal(false)
   }
-  const confirmDeleteHandler = () => {
-    console.log(users[userId].place)
 
+  const confirmDeleteHandler = () => {
     users[userId].place.splice(props.id, 1)
 
-    for (let i = props.id + 1; i < users[userId].place.length; i++) {
+    for (let i = props.id; i < users[userId].place.length; i++) {
       users[userId].place[i].id--
     }
-
-    console.log('deleted')
   }
 
   return (
     <div className="container">
-      {confirmDelete && (
+      {showModal && (
         <Modal
           removeModal={removeModalHandler}
           confirmDelete={confirmDeleteHandler}
@@ -56,7 +54,7 @@ const UserPlaceItem = (props) => {
           <Button type="button" onClick={editHandler}>
             Edit
           </Button>
-          <Button type="button" onClick={deletePlaceHandler}>
+          <Button type="button" onClick={showModalHandler}>
             Delete
           </Button>
         </div>
