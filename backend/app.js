@@ -5,9 +5,11 @@ const { default: mongoose } = require('mongoose')
 
 const userRouter = require('./routes/userRoutes')
 
-// const dotenv = require('dotenv')
+const dotenv = require('dotenv')
 
 const app = express()
+
+app.use(dotenv.config())
 
 app.use(bodyParser.json())
 
@@ -28,26 +30,26 @@ app.use((req, res, next) => {
 // ROUTES
 app.use('/api/users', userRouter)
 
-app.post('/product', (req, res, next) => {
-  const { title, price } = req.body
+// app.post('/product', (req, res, next) => {
+//   const { title, price } = req.body
 
-  if (!title || title.trim().length === 0 || !price || price <= 0) {
-    return res.status(422).json({
-      message: 'Invalid input, please enter a valid title and price.',
-    })
-  }
+//   if (!title || title.trim().length === 0 || !price || price <= 0) {
+//     return res.status(422).json({
+//       message: 'Invalid input, please enter a valid title and price.',
+//     })
+//   }
 
-  const createdProduct = {
-    id: uuid(),
-    title,
-    price,
-  }
+//   const createdProduct = {
+//     id: uuid(),
+//     title,
+//     price,
+//   }
 
-  DUMMY_PRODUCTS.push(createdProduct)
+//   DUMMY_PRODUCTS.push(createdProduct)
 
-  res
-    .status(201)
-    .json({ message: 'Created new product.', product: createdProduct })
-})
+//   res
+//     .status(201)
+//     .json({ message: 'Created new product.', product: createdProduct })
+// })
 
 module.exports = app

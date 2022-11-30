@@ -1,6 +1,9 @@
 exports.users = [
   {
     id: 0,
+    email: 'amine@gmail.com',
+    password: 'test1234',
+    passwordConfirm: 'test1234',
     name: 'amine',
     age: 20,
     place: [
@@ -18,6 +21,9 @@ exports.users = [
   },
   {
     id: 1,
+    email: 'ahmed@gmail.com',
+    password: 'test1234',
+    passwordConfirm: 'test1234',
     name: 'ahmed',
     age: 25,
     place: [
@@ -30,6 +36,9 @@ exports.users = [
   },
   {
     id: 2,
+    email: 'yesin@gmail.com',
+    password: 'test1234',
+    passwordConfirm: 'test1234',
     name: 'yesin',
     age: 19,
     place: [
