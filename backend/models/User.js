@@ -8,10 +8,12 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'please enter a password'],
+    select: false,
   },
   passwordConfirm: {
     type: String,
     required: [true, 'please enter a password'],
+    select: false,
   },
   name: String,
   age: {
