@@ -4,6 +4,7 @@ const uuid = require('uuid/v4')
 const { default: mongoose } = require('mongoose')
 
 const userRouter = require('./routes/userRoutes')
+const placeRouter = require('./routes/placeRoutes')
 
 const dotenv = require('dotenv')
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.use('/api/users', userRouter)
+app.use('/api/places', placeRouter)
 
 // Global Error Handler
 app.use((err, req, res, next) => {
