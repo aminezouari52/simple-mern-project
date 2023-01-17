@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { logActions } from '../../store/store'
+import { logActions } from '../../shared/store/store'
 
 import { NavLink, useNavigate } from 'react-router-dom'
 import Button from '../UI/Button/Button'

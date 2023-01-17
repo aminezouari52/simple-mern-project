@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { logActions } from '../../store/store'
+import { logActions } from '../../shared/store/store'
 import Input from '../UI/Input/Input'
 import Button from '../UI/Button/Button'
-import { users } from '../../utils/database'
+import { users } from '../../shared/utils/database'
 import './Auth.css'
 import { useNavigate } from 'react-router-dom'
 

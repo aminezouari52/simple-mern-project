@@ -12,10 +12,9 @@ const UserItem = (props) => {
 
   return (
     <li className="user-item" onClick={detailsHandler}>
-      <h5>id: {props.id}</h5>
       <h2>{props.name}</h2>
       <p>Age: {props.age}</p>
-      <h6>Places: {props.place.length}</h6>
+      <h6>Places: {props.places.length}</h6>
     </li>
   )
 }

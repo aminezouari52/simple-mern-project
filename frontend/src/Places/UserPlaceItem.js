@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import './UserPlaceItem.css'
-import Button from '../UI/Button/Button'
-import Modal from '../UI/Modal/Modal'
-import { users } from '../../utils/database'
+import Button from '../components/UI/Button/Button'
+import Modal from '../components/UI/Modal/Modal'
+import { users } from '../utils/database'
+import axios from 'axios'
 
 const UserPlaceItem = (props) => {
   const [showModal, setShowModal] = useState(false)
@@ -20,7 +21,7 @@ const UserPlaceItem = (props) => {
   }
 
   const params = useParams()
-  const userId = +params.userId
+  const userId = params.userId
 
   // modal state
   const showModalHandler = () => {
@@ -30,7 +31,9 @@ const UserPlaceItem = (props) => {
     setShowModal(false)
   }
 
-  const confirmDeleteHandler = () => {
+  const confirmDeleteHandler = async () => {
+    await axios.delete('http://localhost:5000/api/places/')
+
     users[userId].place.splice(props.id, 1)
 
     for (let i = props.id; i < users[userId].place.length; i++) {
@@ -43,7 +46,7 @@ const UserPlaceItem = (props) => {
       {showModal && (
         <Modal
           removeModal={removeModalHandler}
-          confirmDelete={confirmDeleteHandler}
+          // confirmDelete={confirmDeleteHandler}
         />
       )}
       <div>img placeholder</div>

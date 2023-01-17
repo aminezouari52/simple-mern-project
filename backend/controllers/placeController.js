@@ -32,3 +32,18 @@ exports.createPlace = async (req, res, next) => {
   try {
   } catch (err) {}
 }
+
+exports.deletePlace = async (req, res, next) => {
+  try {
+    await User.updateOne(
+      {},
+      {
+        $pull: {
+          places: { _id: req.params.pid },
+        },
+      }
+    )
+  } catch (err) {
+    console.log(err)
+  }
+}
