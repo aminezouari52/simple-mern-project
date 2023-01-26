@@ -1,26 +1,32 @@
 import React from 'react'
 
 import UserItem from './UserItem'
-import './UsersList.css'
+import { Card } from '@mui/material'
 
-const UserList = (props) => {
+const UsersList = (props) => {
   let content
 
-  content = (
-    <ul className="user-list">
-      {props.items.map((user) => (
-        <UserItem
-          key={user._id}
-          id={user._id}
-          name={user.name}
-          age={user.age}
-          places={user.places}
-        />
-      ))}
-    </ul>
-  )
+  if (props.items.length === 0)
+    content = (
+      <Card sx={{ textAlign: 'center', padding: 5 }}>No Users Found</Card>
+    )
+  else
+    content = (
+      <ul style={{ listStyle: 'none' }}>
+        {props.items.map((user) => (
+          <UserItem
+            key={user._id}
+            id={user._id}
+            name={user.name}
+            age={user.age}
+            places={user.places}
+            image={user.image}
+          />
+        ))}
+      </ul>
+    )
 
-  return <section id="users">{content}</section>
+  return <>{content}</>
 }
 
-export default UserList
+export default UsersList

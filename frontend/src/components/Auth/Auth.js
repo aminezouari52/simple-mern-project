@@ -2,10 +2,8 @@ import React, { useState, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { logActions } from '../../shared/store/store'
-import Input from '../UI/Input/Input'
-import Button from '../UI/Button/Button'
+import { Button } from '@mui/material'
 import { users } from '../../shared/utils/database'
-import './Auth.css'
 import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
@@ -55,21 +53,21 @@ const Auth = () => {
   if (haveAccount)
     form = (
       <div>
-        <Input id="name" label="Name" type="text" inputRef={nameRef} />
-        <Input id="password" label="Password" type="password" />
+        <input id="name" label="Name" type="text" inputref={nameRef} />
+        <input id="password" label="Password" type="password" />
       </div>
     )
   else
     form = (
       <div>
-        <Input id="name" label="Name" type="name" inputRef={nameRef} />
-        <Input
+        <input id="name" label="Name" type="name" inputref={nameRef} />
+        <input
           id="password"
           label="Password"
           type="password"
-          inputRef={passRef}
+          inputref={passRef}
         />
-        <Input id="age" label="Age" type="number" inputRef={ageRef} />
+        <input id="age" label="Age" type="number" inputref={ageRef} />
       </div>
     )
   return (
@@ -77,20 +75,10 @@ const Auth = () => {
       {form}
 
       <div className="buttons">
-        {haveAccount && (
-          <Button type="button" onClick={loginHandler}>
-            Login
-          </Button>
-        )}
-        {!haveAccount && (
-          <Button type="button" onClick={addUserHandler}>
-            Sign up
-          </Button>
-        )}
+        {haveAccount && <Button onClick={loginHandler}>Login</Button>}
+        {!haveAccount && <Button onClick={addUserHandler}>Sign up</Button>}
 
-        <Button type="button" onClick={accountHandler}>
-          switch
-        </Button>
+        <Button onClick={accountHandler}>switch</Button>
       </div>
     </div>
   )

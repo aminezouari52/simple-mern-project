@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import axios from 'axios'
 
-import Header from './components/Header/Header'
-import UserList from './components/Users/UsersList'
-import UserPlaces from './components/Places/UserPlaces'
-import NewPlace from './components/Places/NewPlace'
-import UpdatePlace from './components/Places/UpdatePlace'
-import Auth from './components/Auth/Auth'
+import Header from './shared/components/Header'
+import UsersList from './Users/components/UsersList'
+import UserPlaces from './Places/pages/UserPlaces'
+import NewPlace from './Places/pages/NewPlace'
+import UpdatePlace from './Places/pages/UpdatePlace'
+import SignIn from './Users/pages/SignIn'
+import SignUp from './Users/pages/SignUp'
 
-import { users } from './shared/utils/database'
 import './App.css'
 
 function App() {
@@ -18,10 +18,7 @@ function App() {
   useEffect(() => {
     const getUsers = async () => {
       const response = await axios.get('http://localhost:5000/api/users/')
-      const responseData = response.data.data.data
-      console.log(responseData)
-
-      setUsers(responseData)
+      setUsers(response.data.data.data)
     }
     getUsers()
   }, [])
@@ -31,11 +28,14 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<UserList items={users} />} />
+          <Route path="/" element={<UsersList items={users} />} />
 
           <Route path="/:userId/places" element={<UserPlaces />} />
 
-          <Route path="auth" element={<Auth />} />
+          <Route path="/auth" element={<SignIn />}>
+            <Route path="/auth" element={<SignIn />} />
+            <Route path="/auth/signup" element={<SignUp />} />
+          </Route>
 
           <Route path="/places/new" element={<NewPlace />} />
 

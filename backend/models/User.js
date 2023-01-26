@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema({
     min: 0,
     max: 99,
   },
+  image: String,
   places: [
     {
       title: String,
