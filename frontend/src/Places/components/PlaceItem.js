@@ -10,14 +10,17 @@ import {
   Typography,
   CardActions,
 } from '@mui/material'
-import MapModal from '../../shared/components/Modals/MapModal'
-import DeleteModal from '../../shared/components/Modals/DeleteModal'
+import MapModal from '../../shared/MapModal'
+import DeleteModal from '../../shared/DeleteModal'
+import { useHttpClient } from '../../shared/http-hook'
 
 const UserPlaceItem = (props) => {
   const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const loggedIn = useSelector((state) => state.value)
+  const { sendRequest } = useHttpClient()
+
+  const loggedinUserId = useSelector((state) => state.id)
 
   // edit page
   const navigate = useNavigate()
@@ -42,15 +45,11 @@ const UserPlaceItem = (props) => {
     setShowDeleteModal(false)
   }
 
-  // const confirmDeleteHandler = async () => {
-  //   await axios.delete('http://localhost:5000/api/places/')
-
-  //   users[userId].place.splice(props.id, 1)
-
-  //   for (let i = props.id; i < users[userId].place.length; i++) {
-  //     users[userId].place[i].id--
-  //   }
-  // }
+  const deletePlaceHandler = async () => {
+    await sendRequest(`http://localhost:5000/api/places/${props.id}`, 'DELETE')
+    setShowDeleteModal(false)
+    navigate(`/${userId}/places`)
+  }
 
   return (
     <Card sx={{ maxWidth: 850, m: 6 }}>
@@ -60,7 +59,11 @@ const UserPlaceItem = (props) => {
         title={props.title}
         cord={props.coordinates}
       />
-      <DeleteModal open={showDeleteModal} close={closeDeleteModalHandler} />
+      <DeleteModal
+        open={showDeleteModal}
+        confirm={deletePlaceHandler}
+        close={closeDeleteModalHandler}
+      />
 
       <CardMedia sx={{ height: 450 }} image={props.image} title={props.title} />
       <CardContent>
@@ -75,23 +78,25 @@ const UserPlaceItem = (props) => {
         </Typography>
       </CardContent>
 
-      {loggedIn && (
-        <CardActions>
-          <Button variant="outlined" onClick={showModalHandler}>
-            View on Map
-          </Button>
-          <Button variant="outlined" onClick={editHandler} color="secondary">
-            Edit
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={showDeleteModalHandler}
-            color="error"
-          >
-            Delete
-          </Button>
-        </CardActions>
-      )}
+      <CardActions>
+        <Button variant="outlined" onClick={showModalHandler}>
+          View on Map
+        </Button>
+        {loggedinUserId === props.creator && (
+          <>
+            <Button variant="outlined" onClick={editHandler} color="secondary">
+              Edit
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={showDeleteModalHandler}
+              color="error"
+            >
+              Delete
+            </Button>
+          </>
+        )}
+      </CardActions>
     </Card>
   )
 }

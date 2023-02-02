@@ -29,7 +29,7 @@ const DeleteModal = (props) => {
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={props.close}
+          onClick={props.confirm}
           autoFocus
           color="error"
           variant="outlined"

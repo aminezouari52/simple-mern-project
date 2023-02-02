@@ -1,6 +1,12 @@
 import React from 'react'
+import axios from 'axios'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+
+import { useDispatch } from 'react-redux'
+import { logActions } from '../../shared/store'
+import { useHttpClient } from '../../shared/http-hook'
 
 import {
   Container,
@@ -12,11 +18,19 @@ import {
   Checkbox,
   Grid,
   Link,
+  Backdrop,
+  CircularProgress,
 } from '@mui/material'
 
 const SignUp = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
+
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -26,14 +40,58 @@ const SignUp = () => {
         .required('Required'),
       email: Yup.string().email('Invalid email address').required('Required'),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values, formikBag) => {
+      const response = await sendRequest(
+        'http://localhost:5000/api/users/signup/',
+        'POST',
+        { name: values.name, email: values.email, password: values.password },
+        {
+          'Content-Type': 'application/json',
+          // 'Authorization': `Bearer ${token}`
+        }
+      )
+      navigate('/')
+      dispatch(logActions.logIn(response.data.data._id))
     },
   })
 
   return (
     <>
-      <div>fdqsfsd</div>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Backdrop
+        sx={{
+          color: '#fff',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          fontSize: 40,
+        }}
+        open={Boolean(error)}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'end',
+          }}
+        >
+          <Box sx={{ m: 4 }}>{error}</Box>
+          <Button
+            variant="contained"
+            color="error"
+            sx={{ width: 160 }}
+            onClick={() => {
+              clearError()
+            }}
+          >
+            close
+          </Button>
+        </Box>
+      </Backdrop>
+
       <Container
         component="main"
         maxWidth="xs"
@@ -49,25 +107,16 @@ const SignUp = () => {
         </Typography>
         <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="given-name"
-                name="firstName"
+                name="name"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="name"
+                label="Name"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="family-name"
+                {...formik.getFieldProps('name')}
               />
             </Grid>
             <Grid item xs={12}>
@@ -78,6 +127,9 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+                {...formik.getFieldProps('email')}
               />
             </Grid>
             <Grid item xs={12}>
@@ -89,6 +141,11 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={formik.touched.password && formik.errors.password}
+                {...formik.getFieldProps('password')}
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,7 +165,7 @@ const SignUp = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/auth/signin" variant="body2">
+              <Link component={NavLink} variant="body2" to="/auth/signin">
                 Already have an account? Sign in
               </Link>
             </Grid>

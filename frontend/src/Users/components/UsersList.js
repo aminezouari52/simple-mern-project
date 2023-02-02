@@ -6,7 +6,7 @@ import { Card } from '@mui/material'
 const UsersList = (props) => {
   let content
 
-  if (props.items.length === 0)
+  if (props.items?.length === 0)
     content = (
       <Card sx={{ textAlign: 'center', padding: 5 }}>No Users Found</Card>
     )
@@ -18,9 +18,8 @@ const UsersList = (props) => {
             key={user._id}
             id={user._id}
             name={user.name}
-            age={user.age}
-            places={user.places}
             image={user.image}
+            placeCount={user.places.length}
           />
         ))}
       </ul>

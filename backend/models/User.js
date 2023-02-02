@@ -1,35 +1,14 @@
 const mongoose = require('mongoose')
+var uniqueValidator = require('mongoose-unique-validator')
 
 const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: [true, 'please enter an email'],
-  },
-  password: {
-    type: String,
-    required: [true, 'please enter a password'],
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, 'please enter a password'],
-    select: false,
-  },
-  name: String,
-  age: {
-    type: Number,
-    min: 0,
-    max: 99,
-  },
-  image: String,
-  places: [
-    {
-      title: String,
-      description: String,
-    },
-  ],
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true, minlength: 6 },
+  image: { type: String, required: true },
+  places: [{ type: mongoose.Schema.ObjectId, required: true, ref: 'Place' }],
 })
 
-const User = mongoose.model('User', UserSchema)
+UserSchema.plugin(uniqueValidator)
 
-module.exports = User
+module.exports = mongoose.model('User', UserSchema)

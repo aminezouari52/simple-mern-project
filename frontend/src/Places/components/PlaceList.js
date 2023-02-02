@@ -7,7 +7,7 @@ import PlaceItem from './PlaceItem'
 const PlaceList = (props) => {
   const navigate = useNavigate()
 
-  if (props.items.length === 0)
+  if (props.items?.length === 0)
     return (
       <Paper
         sx={{
@@ -41,7 +41,7 @@ const PlaceList = (props) => {
           title={place.title}
           description={place.description}
           adress={place.adress}
-          creatorId={place.creatorId}
+          creator={place.creator}
           coordinates={place.coordinates}
         />
       ))}

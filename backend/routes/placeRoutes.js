@@ -1,18 +1,35 @@
 const express = require('express')
+const { check } = require('express-validator')
 const {
-  getPlace,
-  getUserPlaces,
+  getPlaceByID,
+  getPlacesByUserId,
   createPlace,
+  updatePlace,
   deletePlace,
 } = require('../controllers/placeController')
 
 const router = express.Router()
 
-router.get('/:pid', getPlace)
-router.get('/user/:uid', getUserPlaces)
+router.get('/:pid', getPlaceByID)
 
-router.post('/', createPlace)
+router.get('/user/:uid', getPlacesByUserId)
 
-// router.delete('/:pid', deletePlace)
+router.post(
+  '/',
+  [
+    check('title').not().isEmpty(),
+    check.apply('description').isLength({ min: 5 }),
+    check('adress').not().isEmpty(),
+  ],
+  createPlace
+)
+
+router.patch(
+  '/:pid',
+  [check('title').not().isEmpty(), check('description').isLength({ min: 5 })],
+  updatePlace
+)
+
+router.delete('/:pid', deletePlace)
 
 module.exports = router

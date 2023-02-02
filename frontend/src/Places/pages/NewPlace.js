@@ -2,44 +2,17 @@ import React, { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { useSelector } from 'react-redux'
 
-import { Button, TextField } from '@mui/material'
-import { Box } from '@mui/system'
+import { useHttpClient } from '../../shared/http-hook'
+
+import { Button, TextField, Box } from '@mui/material'
 
 const NewPlace = () => {
-  const titleRef = useRef()
-  const descriptionRef = useRef()
-
-  const id = localStorage.getItem('id')
-
   const navigate = useNavigate()
+  const { isLoading, error, sendRequest, clearError } = useHttpClient()
 
-  // const addPlaceHandler = () => {
-  //   const title = titleRef.current.value
-  //   const description = descriptionRef.current.value
-
-  //   if (!title || !description)
-  //     console.log('please enter title and description')
-  //   else if (!id)
-  //     console.log(
-  //       'you are not logged in, please log in in order to add a place'
-  //     )
-  //   else {
-  //     for (let i = 0; i < users.length; i++) {
-  //       if (users[i].id === +id) {
-  //         let userPlaces = users[i].place
-  //         userPlaces.push({
-  //           id: userPlaces[userPlaces.length - 1] + 1,
-  //           title,
-  //           description,
-  //         })
-  //         console.log('place added!')
-  //         navigate('/')
-  //         break
-  //       }
-  //     }
-  //   }
-  // }
+  const userId = useSelector((state) => state.id)
 
   const formik = useFormik({
     initialValues: {
@@ -58,8 +31,25 @@ const NewPlace = () => {
         .max(5, 'Must be 5 characters or less')
         .required('Required'),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values) => {
+      console.log(userId)
+      await sendRequest(
+        'http://localhost:5000/api/places',
+        'POST',
+        {
+          title: values.title,
+          description: values.description,
+          // image: 'test1',
+          address: values.adress,
+          // location: { lat: 1, lng: 2 },
+          creator: userId,
+        },
+        {
+          'Content-Type': 'application/json',
+          // 'Authorization': `Bearer ${token}`
+        }
+      )
+      navigate(`/${userId}/places`)
     },
   })
 

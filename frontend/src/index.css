@@ -4,7 +4,8 @@
 
 html {
   font-family: sans-serif;
-  background-color: rgb(212, 212, 212);
+  /* background-color: rgb(212, 212, 212); */
+  background-color: #fff;
 }
 
 body {

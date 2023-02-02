@@ -1,7 +1,7 @@
 import React from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { Avatar, CardHeader, Card, Typography } from '@mui/material'
+import { Avatar, Card, Typography } from '@mui/material'
 
 const UserItem = (props) => {
   const navigate = useNavigate()
@@ -30,8 +30,8 @@ const UserItem = (props) => {
         <div>
           <Typography variant="h4">{props.name}</Typography>
           <Typography variant="h5" fontWeight="bold">
-            {props.places.length}{' '}
-            {props.places.length === 1 ? 'Place' : 'Places'}
+            {props.placeCount}
+            {props.placeCount === 1 ? ' Place' : ' Places'}
           </Typography>
         </div>
       </Card>
